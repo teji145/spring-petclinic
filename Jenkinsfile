@@ -13,7 +13,7 @@ pipeline  {
   }
              stages ('Archiving and test Results')   {
                 steps  {
-         junit stdioRetention: '', testResults: '**/surefire-reports/*.xml'
+         junit '**/surefire-reports/*.xml'
          archiveArtifacts artifacts: '**/*.jar', followSymlinks: false
       }
     }
