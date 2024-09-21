@@ -1,16 +1,21 @@
-node('JDK17')  {
-   stage('sourcecode')  {
-  //get the code from git repo
- git branch: 'mybranch', url: 'https://github.com/teji145/spring-petclinic.git'
+pipeline  {
+   agent { label 'JDK17' }
+   stages  {
+          stage ('SourceCode')  {
+             steps {
+                   git branch: 'mybranch', url: 'https://github.com/teji145/spring-petclinic.git'
+              }
+           }
+             stage('build the code')  {
+             steps   {
+               sh 'mvn clean package'
+    }
   }
-  stage ('build the code')  {
-   //build the code from mvn
-  sh 'mvn clean package'
-
-}
-    stage ('Archive the Test Results')  {
-   //archive and test the code
-   junit stdioRetention: '', testResults: '**/surefire-reports/*.xml'
-   archiveArtifacts artifacts: '**/*.jar', followSymlinks: false
+             stages ('Archiving and test Results')   {
+                steps  {
+         junit stdioRetention: '', testResults: '**/surefire-reports/*.xml'
+         archiveArtifacts artifacts: '**/*.jar', followSymlinks: false
+      }
+    }
    }
- }
+  }
