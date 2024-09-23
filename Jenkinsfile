@@ -9,7 +9,7 @@ pipeline  {
     }
      parameters {
        choice(name: 'CHOICES', choices: ['compile', 'package', 'clean package']
-     stages  {
+     stage  {
           stage ('Source code')  {
              steps {
           git url: 'https://github.com/teji145/spring-petclinic.git',branch: 'mybranch'
