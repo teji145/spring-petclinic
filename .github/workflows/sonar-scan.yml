@@ -1,5 +1,5 @@
 name: SonarQube Integration
-  sonarqube:
+  sonarQube:
     name: SonarQube Integration
     runs-on: ubuntu-20.04
     
