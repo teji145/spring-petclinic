@@ -153,5 +153,5 @@ class PetController {
 	}
                 private int getNumber() {
 			return 0;
-		}
+      }
 }
