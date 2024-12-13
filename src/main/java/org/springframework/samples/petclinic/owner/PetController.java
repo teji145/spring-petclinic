@@ -151,7 +151,4 @@ class PetController {
 		redirectAttributes.addFlashAttribute("message", "Pet details has been edited");
 		return "redirect:/owners/{ownerId}";
 	}
-                private int getNumber() {
-			return 0;
-      }
 }
