@@ -6,12 +6,11 @@ node('JDK17') {
           stage ('Build the code')  {
                  sh 'mvn clean package'
         }
-     }
+     
          stage('Archiving and Test Results')  {
           junit stdioRetention: '', testResults: '**/surefire-reports/*.xml'
           archiveArtifacts artifacts: '**/*.jar', followSymlinks: false
     }
-
 }
  
 
