@@ -4,7 +4,7 @@ node('JDK17') {
                    git branch: 'mybranch', url: 'https://github.com/teji145/spring-petclinic.git'
        }
           stage ('Build the code')  {
-                 sh 'mvn clean package'
+                 sh script: "/opt/apache-maven-3.9.9/bin/mvn
         }
      
          stage('Archiving and Test Results')  {
