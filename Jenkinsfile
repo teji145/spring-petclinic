@@ -1,41 +1,17 @@
-pipeline  {
-       agent {label 'JDK17'}
-              options {
-           timeout(time: 1, unit: 'HOURS')
-              retry(2)
-     }
-        triggers  {
-            cron ('0 * * * *')
-    }
-     parameters {
-       choice(name: 'GOAL', choices: ['compile', 'package', 'clean package'])
-     }
-     stages  {
-          stage ('Source code')  {
-             steps {
-          git url: 'https://github.com/teji145/spring-petclinic.git',branch: 'mybranch'
-     }
-   }
-          stage ('build the code')  {
-                 steps {
-             sh script: "/opt/apache-maven-3.9.9/bin/mvn ${params.GOAL}"
+node('JDK17') {
+        stage('sourceCode') {
+                   //get the code from git repo   
+                   git branch: 'mybranch', url: 'https://github.com/teji145/spring-petclinic.git'
+       }
+          stage ('Build the code')  {
+                 sh 'mvn clean package'
         }
      }
-         stage('Reporting and Archiving')  {
-          steps {
-            junit testResults: 'target/surefire-reports/*.xml'
-       }
-     }
-   }
-        post {
-          success  {
-            // send the success email
-             echo "success"
-     }
-          unsuccessful {
-            // send the unsuccess email
-             echo "failure"
-     }
-   }
- }
+         stage('Archiving and Test Results')  {
+          junit stdioRetention: '', testResults: '**/surefire-reports/*.xml'
+          archiveArtifacts artifacts: '**/*.jar', followSymlinks: false
+    }
+
+}
+ 
 
